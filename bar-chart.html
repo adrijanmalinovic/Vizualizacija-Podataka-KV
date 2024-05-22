@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bar Chart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 100%;
+            background-color: #333;
+            color: #fff;
+            padding-top: 20px;
+        }
+        #content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        p {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        select {
+            margin-bottom: 10px;
+        }
+        .chart-container {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .bar {
+            fill: steelblue;
+        }
+        .bar:hover {
+            fill: orange;
+        }
+        .axis text {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <h2>Pages</h2>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="collection.html">Collection</a></li>
+            <li><a href="bar-chart.html">Bar Chart</a></li>
+        </ul>
+    </div>
+    <div id="content">
+        <h1>Bar Chart</h1>
+        <div class="chart-container">
+            <h2>Bar Chart Options</h2>
+            <div>
+                <label for="x-axis">X Axis:</label>
+                <select id="x-axis">
+                    <option value="rank">Rank</option>
+                    <option value="rating">Rating</option>
+                    <option value="votes">Votes</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+            <div>
+                <label for="y-axis">Y Axis:</label>
+                <select id="y-axis">
+                    <option value="rank">Rank</option>
+                    <option value="rating">Rating</option>
+                    <option value="votes">Votes</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+            <svg id="bar-chart"></svg>
+        </div>
+    </div>
+
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script>
+        // Load data and create bar chart
+        d3.json("movies.json").then(data => {
+            // Extract necessary data
+            const movies = data.map(movie => ({
+                title: movie.title,
+                [document.getElementById('x-axis').value]: +movie[document.getElementById('x-axis').value],
+                [document.getElementById('y-axis').value]: +movie[document.getElementById('y-axis').value]
+            }));
+
+            // Set up SVG dimensions
+            const margin = { top: 20, right: 20, bottom: 50, left: 70 };
+            const width = 800 - margin.left - margin.right;
+            const height = 400 - margin.top - margin.bottom;
+
+            // Create SVG element
+            const svg = d3.select("#bar-chart")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            // Set up scales
+            const xScale = d3.scaleBand()
+                .range([0, width])
+                .padding(0.1)
+                .domain(movies.map(d => d.title));
+
+            const yScale = d3.scaleLinear()
+                .range([height, 0])
+                .domain([0, d3.max(movies, d => d[document.getElementById('y-axis').value])]);
+
+            // Add x-axis
+            svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(xScale))
+                .selectAll("text")
+                .style("text-anchor", "end")
+                .attr("dx", "-.8em")
+                .attr("dy", "-.55em")
+                .attr("transform", "rotate(-90)");
+
+            // Add y-axis
+            svg.append("g")
+                .call(d3.axisLeft(yScale));
+
+            // Add bars
+            svg.selectAll(".bar")
+                .data(movies)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", d => xScale(d.title))
+                .attr("width", xScale.bandwidth())
+                .attr("y", d => yScale(d[document.getElementById('y-axis').value]))
+                .attr("height", d => height - yScale(d[document.getElementById('y-axis').value]));
+        }).catch(error => {
+            console.error('Error loading the data:', error);
+        });
+
+        // Event listeners for select boxes
+        document.getElementById('x-axis').addEventListener('change', updateChart);
+        document.getElementById('y-axis').addEventListener('change', updateChart);
+
+        // Function to update chart based on select box changes
+        function updateChart() {
+            // Reload data and recreate chart
+            d3.json("movies.json").then(data => {
+                // Extract necessary data
+                const movies = data.map(movie => ({
+                    title: movie.title,
+                    [document.getElementById('x-axis').value]: +movie[document.getElementById('x-axis').value],
+                    [document.getElementById('y-axis').value]: +movie[document.getElementById('y-axis').value]
+                }));
+
+                // Update scales
+                const xScale = d3.scaleBand()
+                    .range([0, width])
+                    .padding(0.1)
+                    .domain(movies.map(d => d.title));
+
+                const yScale = d3.scaleLinear()
+                    .range([height, 0])
+                    .domain([0, d3.max(movies, d => d[document.getElementById('y-axis').value])]);
+
+                // Update x-axis
+                svg.select(".x-axis")
+                    .transition()
+                    .duration(1000)
+                    .call(d3.axisBottom(xScale));
+
+                // Update y-axis
+                svg.select(".y-axis")
+                    .transition()
+                    .duration(1000)
+                    .call(d3.axisLeft(yScale));
+
+                // Update bars
+                svg.selectAll(".bar")
+                    .data(movies)
+                    .transition()
+                    .duration(1000)
+                    .attr("x", d => xScale(d.title))
+                    .attr("width", xScale.bandwidth())
+                    .attr("y", d => yScale(d[document.getElementById('y-axis').value]))
+                    .attr("height", d => height - yScale(d[document.getElementById('y-axis').value]));
+            }).catch(error => {
+                console.error('Error loading the data:', error);
+            });
+        }
+    </script>
+</body>
+</html>

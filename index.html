@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Import Sidebar -->
+    <div class="sidebar-container">
+        <!-- Sidebar will be imported here -->
+        <!-- Use JavaScript to import sidebar.html into this div -->
+    </div>
+
+    <!-- Page Content -->
+    <div class="content">
+        <!-- You can add page content here -->
+        <h1>Welcome to My Website!</h1>
+        <p>This is the home page.</p>
+    </div>
+
+    <script>
+        // JavaScript to import sidebar.html into sidebar-container div
+        fetch('sidebar.html')
+            .then(response => response.text())
+            .then(html => {
+                document.querySelector('.sidebar-container').innerHTML = html;
+            });
+    </script>
+</body>
+</html>

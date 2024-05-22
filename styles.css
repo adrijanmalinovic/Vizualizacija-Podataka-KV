@@ -1,0 +1,93 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    margin-left: 200px; /* Adjust based on sidebar width */
+    padding: 20px;
+}
+
+/* collection.html */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+.controls {
+    margin-bottom: 20px;
+}
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+.movie {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    position: relative; /* Added for absolute positioning */
+    width: 150px; /* Set a fixed width for the movie box */
+}
+.movie img {
+    max-width: 100px;
+    height: auto;
+}
+.movie-info {
+    display: none;
+    position: absolute;
+    background-color: rgba(255, 255, 255, 1.0);
+    border: 1px solid #ccc;
+    padding: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+}
+.movie:hover .movie-info {
+    display: block;
+}
+.movie-title {
+    white-space: normal; /* Allow title to wrap */
+}
+.dropdown {
+    margin-right: 10px;
+}
+
+
+
+/* sidebar.html */
+.sidebar {
+    height: 100vh; /* Adjust based on sidebar height */
+    width: 200px; /* Adjust sidebar width */
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto; /* Enable scrolling if sidebar height exceeds viewport */
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+    background-color: #555;
+}
+
+

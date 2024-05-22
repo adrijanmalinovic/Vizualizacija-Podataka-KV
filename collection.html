@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Grid Visualization</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar-container">
+        <!-- Sidebar will be imported here -->
+    </div>
+
+    <!-- Page Content -->
+    <div class="content">
+        <div class="container">
+            <div class="controls">
+                <select id="sort-by" class="dropdown">
+                    <option value="rank-asc">Rank (Ascending)</option>
+                    <option value="rank-desc">Rank (Descending)</option>
+                    <option value="year-asc">Year (Ascending)</option>
+                    <option value="year-desc">Year (Descending)</option>
+                    <option value="duration-asc">Duration (Ascending)</option>
+                    <option value="duration-desc">Duration (Descending)</option>
+                    <option value="votes-asc">Votes (Ascending)</option>
+                    <option value="votes-desc">Votes (Descending)</option>
+                    <option value="rating-asc">Rating (Ascending)</option>
+                    <option value="rating-desc">Rating (Descending)</option>
+                </select>
+                <select id="filter-genre" class="dropdown">
+                    <option value="">All Genres</option>
+                </select>
+            </div>
+            <div id="movie-grid" class="grid"></div>
+        </div>
+    </div>
+
+    
+
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="collection.js"></script>
+    <script>
+        // JavaScript to import sidebar.html into sidebar-container div
+        fetch('sidebar.html')
+            .then(response => response.text())
+            .then(html => {
+                document.querySelector('.sidebar-container').innerHTML = html;
+            });
+    </script>
+</body>
+</html>
