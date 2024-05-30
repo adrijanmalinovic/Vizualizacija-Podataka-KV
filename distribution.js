@@ -65,6 +65,16 @@ d3.json("movies.json").then(data => {
             .attr("transform", `translate(0,${height})`)
             .call(d3.axisBottom(x));
 
+        // Tooltip setup
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("position", "absolute")
+            .style("visibility", "hidden")
+            .style("background-color", "white")
+            .style("border", "solid 1px #ccc")
+            .style("padding", "10px")
+            .style("border-radius", "5px");
+
         // Draw bars
         svg.selectAll("rect")
             .data(bins)
@@ -73,7 +83,18 @@ d3.json("movies.json").then(data => {
             .attr("transform", d => `translate(${x(d.x0)},${y(d.length)})`)
             .attr("width", d => x(d.x1) - x(d.x0) - 1)
             .attr("height", d => height - y(d.length))
-            .style("fill", "#69b3a2");
+            .style("fill", "#69b3a2")
+            .on("mouseover", (event, d) => {
+                tooltip.style("visibility", "visible")
+                    .text(`Count: ${d.length}`);
+            })
+            .on("mousemove", event => {
+                tooltip.style("top", (event.pageY - 10) + "px")
+                    .style("left", (event.pageX + 10) + "px");
+            })
+            .on("mouseout", () => {
+                tooltip.style("visibility", "hidden");
+            });
     }
 }).catch(error => {
     console.error('Error loading the data:', error);
