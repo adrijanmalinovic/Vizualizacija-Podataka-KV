@@ -1,0 +1,46 @@
+<!-- correlation.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metric Correlation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Import Sidebar -->
+    <div class="sidebar-container">
+        <!-- Sidebar will be imported here -->
+    </div>
+
+    <!-- Page Content -->
+    <div class="content">
+        <label for="x-metric">Choose X-axis Metric:</label>
+        <select id="x-metric" class="dropdown">
+            <option value="year">Year</option>
+            <option value="duration">Duration</option>
+            <option value="votes">Votes</option>
+            <option value="rating">Rating</option>
+        </select>
+        <label for="y-metric">Choose Y-axis Metric:</label>
+        <select id="y-metric" class="dropdown">
+            <option value="rating">Rating</option>
+            <option value="votes">Votes</option>
+            <option value="duration">Duration</option>
+            <option value="year">Year</option>
+        </select>
+        <div id="chart"></div>
+    </div>
+
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="correlation.js"></script>
+    <script>
+        // JavaScript to import sidebar.html into sidebar-container div
+        fetch('sidebar.html')
+            .then(response => response.text())
+            .then(html => {
+                document.querySelector('.sidebar-container').innerHTML = html;
+            });
+    </script>
+</body>
+</html>
