@@ -90,4 +90,7 @@ body {
     background-color: #555;
 }
 
-
+/* distribution.html */
+#chart {
+    margin-top: 20px;
+}
