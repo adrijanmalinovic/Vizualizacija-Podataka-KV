@@ -11,19 +11,43 @@ d3.json("movies.json").then(data => {
         return movie;
     });
 
-    // Initial rendering
-    renderChart(movies, "year");
+    // Get all unique genres
+    let genres = new Set();
+    movies.forEach(movie => {
+        movie.genres.forEach(genre => genres.add(genre));
+    });
 
-    // Event listener for metric selection
+    // Populate genre filter
+    const genreFilter = d3.select("#genre");
+    genres.forEach(genre => {
+        genreFilter.append("option").attr("value", genre).text(genre);
+    });
+
+    // Initial rendering
+    renderChart(movies, "year", "");
+
+    // Event listeners for metric and genre selection
     d3.select("#metric").on("change", () => {
         const metric = d3.select("#metric").node().value;
-        renderChart(movies, metric);
+        const genre = d3.select("#genre").node().value;
+        renderChart(movies, metric, genre);
+    });
+
+    d3.select("#genre").on("change", () => {
+        const metric = d3.select("#metric").node().value;
+        const genre = d3.select("#genre").node().value;
+        renderChart(movies, metric, genre);
     });
 
     // Render chart function
-    function renderChart(movies, metric) {
-        console.log(`Rendering chart with metric: ${metric}`);
-        const values = movies.map(movie => movie[metric]);
+    function renderChart(movies, metric, genre) {
+        console.log(`Rendering chart with metric: ${metric}, genre: ${genre}`);
+        let filteredMovies = movies;
+        if (genre) {
+            filteredMovies = movies.filter(movie => movie.genres.includes(genre));
+        }
+
+        const values = filteredMovies.map(movie => movie[metric]);
 
         // Set up chart dimensions
         const margin = { top: 20, right: 30, bottom: 40, left: 40 },
