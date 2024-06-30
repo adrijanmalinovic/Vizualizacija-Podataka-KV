@@ -110,7 +110,7 @@ d3.json("movies.json").then(data => {
             .style("fill", "#69b3a2")
             .on("mouseover", (event, d) => {
                 tooltip.style("visibility", "visible")
-                    .text(`Count: ${d.length}`);
+                    .html(`Count: ${d.length}`);
             })
             .on("mousemove", event => {
                 tooltip.style("top", (event.pageY - 10) + "px")

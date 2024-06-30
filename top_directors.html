@@ -1,10 +1,9 @@
-<!-- distribution.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Distribution</title>
+    <title>Top Directors</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -15,23 +14,18 @@
 
     <!-- Page Content -->
     <div class="content">
-        <h1>Data Distribution</h1>
-        <label for="metric">Choose a metric:</label>
-        <select id="metric" class="dropdown">
-            <option value="year">Year</option>
-            <option value="duration">Duration</option>
-            <option value="votes">Votes</option>
-            <option value="rating">Rating</option>
-        </select>
-        <label for="genre">Choose a genre:</label>
-        <select id="genre" class="dropdown">
-            <option value="">All Genres</option>
-        </select>
+        <h1>Top Directors</h1>
+        <div id="controls">
+            <label for="director-count">Number of top directors:</label>
+            <input type="number" id="director-count" min="5" max="20" value="10">
+            <button id="update-chart">Update</button>
+        </div>
         <div id="chart"></div>
+        <div id="director-movies"></div>
     </div>
 
     <script src="https://d3js.org/d3.v6.min.js"></script>
-    <script src="distribution.js"></script>
+    <script src="top_directors.js"></script>
     <script>
         // JavaScript to import sidebar.html into sidebar-container div
         fetch('sidebar.html')

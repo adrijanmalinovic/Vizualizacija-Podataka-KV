@@ -108,3 +108,35 @@ body {
     pointer-events: none;
     visibility: hidden;
 }
+
+/* Top Directors styles */
+#controls {
+    margin-bottom: 20px;
+}
+
+#director-count {
+    width: 50px;
+    margin-right: 10px;
+}
+
+.bar {
+    cursor: pointer;
+    transition: fill 0.3s;
+}
+
+.bar:hover {
+    fill: #4a7a6c;
+}
+
+#director-movies {
+    margin-top: 20px;
+}
+
+#director-movies ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#director-movies li {
+    margin-bottom: 5px;
+}
