@@ -50,7 +50,7 @@ d3.json("movies.json").then(data => {
         const values = filteredMovies.map(movie => movie[metric]);
 
         // Set up chart dimensions
-        const margin = { top: 20, right: 30, bottom: 40, left: 40 },
+        const margin = { top: 20, right: 30, bottom: 60, left: 60 },
             width = 800 - margin.left - margin.right,
             height = 400 - margin.top - margin.bottom;
 
@@ -89,6 +89,23 @@ d3.json("movies.json").then(data => {
             .attr("transform", `translate(0,${height})`)
             .call(d3.axisBottom(x));
 
+        // Add X axis label
+        svg.append("text")
+            .attr("class", "x-label")
+            .attr("text-anchor", "middle")
+            .attr("x", width / 2)
+            .attr("y", height + margin.bottom - 10)
+            .text(metric.charAt(0).toUpperCase() + metric.slice(1));
+
+        // Add Y axis label
+        svg.append("text")
+            .attr("class", "y-label")
+            .attr("text-anchor", "middle")
+            .attr("transform", "rotate(-90)")
+            .attr("y", -margin.left + 20)
+            .attr("x", -height / 2)
+            .text("Count");
+
         // Tooltip setup
         const tooltip = d3.select("body").append("div")
             .attr("class", "tooltip")
@@ -110,7 +127,7 @@ d3.json("movies.json").then(data => {
             .style("fill", "#69b3a2")
             .on("mouseover", (event, d) => {
                 tooltip.style("visibility", "visible")
-                    .html(`Count: ${d.length}`);
+                    .html(`${d.length}`);
             })
             .on("mousemove", event => {
                 tooltip.style("top", (event.pageY - 10) + "px")
