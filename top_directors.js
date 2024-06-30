@@ -38,7 +38,7 @@ d3.json("movies.json").then(data => {
     }
 
     function renderChart(topDirectors) {
-        const margin = { top: 20, right: 30, bottom: 40, left: 150 };
+        const margin = { top: 20, right: 30, bottom: 50, left: 150 };
         const width = 800 - margin.left - margin.right;
         const height = 400 - margin.top - margin.bottom;
 
@@ -87,7 +87,7 @@ d3.json("movies.json").then(data => {
             .on("click", (event, d) => displayDirectorMovies(d))
             .on("mouseover", (event, d) => {
                 tooltip.style("visibility", "visible")
-                    .html(`<strong>${d.name}</strong><br>Avg. Rating: ${d.averageRating.toFixed(4)}`);
+                    .html(`<strong>${d.name}</strong><br>Avg. Rating: ${d.averageRating.toFixed(2)}`);
             })
             .on("mousemove", event => {
                 tooltip.style("top", (event.pageY - 10) + "px")
@@ -107,7 +107,7 @@ d3.json("movies.json").then(data => {
 
         svg.append("text")
             .attr("x", width / 2)
-            .attr("y", height + margin.bottom)
+            .attr("y", height + margin.bottom - 5)
             .attr("text-anchor", "middle")
             .text("Average Rating");
     }

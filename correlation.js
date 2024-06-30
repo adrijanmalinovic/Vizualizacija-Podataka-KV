@@ -1,4 +1,3 @@
-/* correlation.js */
 d3.json("movies.json").then(data => {
     console.log("Data loaded:", data);
     let movies = data.map(movie => {
@@ -25,7 +24,7 @@ d3.json("movies.json").then(data => {
         const yMetric = d3.select("#y-metric").node().value;
         renderChart(movies, xMetric, yMetric);
     });
-
+    
     // Render chart function
     function renderChart(movies, xMetric, yMetric) {
         console.log(`Rendering chart with x-axis metric: ${xMetric}, y-axis metric: ${yMetric}`);
@@ -77,19 +76,58 @@ d3.json("movies.json").then(data => {
             .attr("class", "y-label")
             .attr("text-anchor", "middle")
             .attr("transform", "rotate(-90)")
-            .attr("y", -margin.left + 15)
+            .attr("y", -margin.left + 20)
             .attr("x", -height / 2)
             .text(yMetric.charAt(0).toUpperCase() + yMetric.slice(1));
 
+        // Tooltip setup
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("position", "absolute")
+            .style("visibility", "hidden")
+            .style("background-color", "white")
+            .style("border", "solid 1px #ccc")
+            .style("padding", "10px")
+            .style("border-radius", "5px");
+
+        // Create a map to store movies at each position
+        const positionMap = new Map();
+
+        movies.forEach(movie => {
+            const key = `${xScale(movie[xMetric])},${yScale(movie[yMetric])}`;
+            if (!positionMap.has(key)) {
+                positionMap.set(key, []);
+            }
+            positionMap.get(key).push(movie);
+        });
+
         // Draw scatter plot points
         svg.selectAll(".dot")
-            .data(movies)
+            .data(Array.from(positionMap.entries()))
             .enter().append("circle")
             .attr("class", "dot")
-            .attr("cx", d => xScale(d[xMetric]))
-            .attr("cy", d => yScale(d[yMetric]))
-            .attr("r", 2)
-            .style("fill", "red");
+            .attr("cx", d => d[0].split(',')[0])
+            .attr("cy", d => d[0].split(',')[1])
+            .attr("r", d => Math.min(5, 2 + d[1].length)) // Increase size for overlapping points
+            .style("fill", "red")
+            .on("mouseover", (event, d) => {
+                const moviesAtPoint = d[1];
+                let tooltipContent = moviesAtPoint.map(movie => 
+                    `<strong>${movie.title}</strong><br>` +
+                    `<em>${xMetric}</em> - ${movie[xMetric]}<br>` +
+                    `<em>${yMetric}</em> - ${movie[yMetric]}`
+                ).join('<br><br>');
+                
+                tooltip.style("visibility", "visible")
+                    .html(tooltipContent);
+            })
+            .on("mousemove", event => {
+                tooltip.style("top", (event.pageY - 10) + "px")
+                    .style("left", (event.pageX + 10) + "px");
+            })
+            .on("mouseout", () => {
+                tooltip.style("visibility", "hidden");
+            });
     }
 }).catch(error => {
     console.error('Error loading the data:', error);
