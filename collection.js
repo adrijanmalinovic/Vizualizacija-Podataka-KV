@@ -71,11 +71,21 @@ d3.json("movies.json").then(data => {
             movieDiv.append("div").attr("class", "movie-title").text(movie.title);
             const movieInfo = movieDiv.append("div").attr("class", "movie-info");
             movieInfo.html(`
-                <p><strong>Rank:</strong> ${movie.rank}</p>
-                <p><strong>Rating:</strong> ${movie.rating}</p>
-                <p><strong>Votes:</strong> ${movie.votes}</p>
-                <p><strong>Duration:</strong> ${movie.duration} minutes</p>
-                <p><strong>Year:</strong> ${movie.year}</p>
+                <div style="display: flex; gap: 20px;">
+                    <div>
+                        <p><strong>Title:</strong><br>${movie.title}</p>
+                        <p><strong>Rank:</strong><br>${movie.rank}</p>
+                        <p><strong>Rating:</strong><br>${movie.rating}</p>
+                        <p><strong>Votes:</strong><br>${movie.votes}</p>
+                        <p><strong>Duration:</strong><br>${movie.duration} minutes</p>
+                        <p><strong>Year:</strong><br>${movie.year}</p>
+                    </div>
+                    <div>
+                        <p><strong>Directors:</strong><br><em>${movie.directors.join(', ')}</em></p>
+                        <p><strong>Writers:</strong><br><em>${movie.writers.join(', ')}</em></p>
+                        <p><strong>Actors:</strong><br><em>${movie.actors.slice(0, 5).join(', ')}${movie.actors.length > 5 ? '...' : ''}</em></p>
+                    </div>
+                </div>
             `);
         });
     }

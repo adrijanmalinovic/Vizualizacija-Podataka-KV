@@ -53,7 +53,7 @@ d3.json("movies.json").then(data => {
             .range([height, 0])
             .nice();
 
-        const xAxis = d3.axisBottom(xScale);
+        const xAxis = d3.axisBottom(xScale).ticks(8).tickSizeOuter(0);
         const yAxis = d3.axisLeft(yScale);
 
         svg.append("g")

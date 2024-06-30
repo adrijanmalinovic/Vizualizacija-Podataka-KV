@@ -87,7 +87,7 @@ d3.json("movies.json").then(data => {
 
         svg.append("g")
             .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x));
+            .call(d3.axisBottom(x).ticks(8).tickSizeOuter(0));
 
         // Add X axis label
         svg.append("text")
@@ -126,8 +126,9 @@ d3.json("movies.json").then(data => {
             .attr("height", d => height - y(d.length))
             .style("fill", "#69b3a2")
             .on("mouseover", (event, d) => {
+                const metricLabel = metric.charAt(0).toUpperCase() + metric.slice(1);
                 tooltip.style("visibility", "visible")
-                    .html(`${d.length}`);
+                    .html(`<strong>Count:</strong><br>${d.length}<br><br><strong>${metricLabel}:</strong><br>${d.x0} - ${d.x1}`);
             })
             .on("mousemove", event => {
                 tooltip.style("top", (event.pageY - 10) + "px")
