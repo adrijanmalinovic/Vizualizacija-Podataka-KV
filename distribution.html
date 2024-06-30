@@ -15,19 +15,23 @@
 
     <!-- Page Content -->
     <div class="content">
-        <h1>Data Distribution</h1>
-        <label for="metric">Choose a metric:</label>
-        <select id="metric" class="dropdown">
-            <option value="year">Year</option>
-            <option value="duration">Duration</option>
-            <option value="votes">Votes</option>
-            <option value="rating">Rating</option>
-        </select>
-        <label for="genre">Choose a genre:</label>
-        <select id="genre" class="dropdown">
-            <option value="">All Genres</option>
-        </select>
-        <div id="chart"></div>
+        <div class="container">
+            <h1>Data Distribution</h1>
+            <div class="controls">
+                <label for="metric">Data:</label>
+                <select id="metric" class="dropdown">
+                    <option value="year">Year</option>
+                    <option value="duration">Duration</option>
+                    <option value="votes">Votes</option>
+                    <option value="rating">Rating</option>
+                </select>
+                <label for="genre">Genre:</label>
+                <select id="genre" class="dropdown">
+                    <option value="">All Genres</option>
+                </select>
+            </div>
+            <div id="chart"></div>
+        </div>
     </div>
 
     <script src="https://d3js.org/d3.v6.min.js"></script>

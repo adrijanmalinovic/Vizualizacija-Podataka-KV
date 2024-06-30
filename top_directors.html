@@ -14,14 +14,16 @@
 
     <!-- Page Content -->
     <div class="content">
-        <h1>Top Directors</h1>
-        <div id="controls">
-            <label for="director-count">Number of top directors:</label>
-            <input type="number" id="director-count" min="5" max="20" value="10">
-            <button id="update-chart">Update</button>
+        <div class="container">
+            <h1>Top Directors</h1>
+            <div class="controls">
+                <label for="director-count">Number of directors to display:</label>
+                <input type="number" id="director-count" min="10" max="50" value="20">
+                <button id="update-chart">Update</button>
+            </div>
+            <div id="chart"></div>
+            <div id="director-movies"></div>
         </div>
-        <div id="chart"></div>
-        <div id="director-movies"></div>
     </div>
 
     <script src="https://d3js.org/d3.v6.min.js"></script>
