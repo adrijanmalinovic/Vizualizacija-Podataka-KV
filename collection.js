@@ -79,11 +79,12 @@ d3.json("movies.json").then(data => {
                         <p><strong>Votes:</strong><br>${movie.votes}</p>
                         <p><strong>Duration:</strong><br>${movie.duration} minutes</p>
                         <p><strong>Year:</strong><br>${movie.year}</p>
+                        <p><strong>Genres:</strong><br>${movie.genres.join(', ')}</p>
                     </div>
                     <div>
                         <p><strong>Directors:</strong><br><em>${movie.directors.join(', ')}</em></p>
                         <p><strong>Writers:</strong><br><em>${movie.writers.join(', ')}</em></p>
-                        <p><strong>Actors:</strong><br><em>${movie.actors.slice(0, 5).join(', ')}${movie.actors.length > 5 ? '...' : ''}</em></p>
+                        <p><strong>Actors:</strong><br><em>${movie.actors.slice(0, 6).join(', ')}${movie.actors.length > 6 ? '...' : ''}</em></p>
                     </div>
                 </div>
             `);
